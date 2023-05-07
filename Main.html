@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Speech Assistant</title>
+    <style>
+        body {
+            text-align: center;
+        }
+
+        .talk {
+            background-color: #eb0303;
+            color: #fff;
+            border: none;
+           border-radius: 50px;
+           height: 30px;
+           width: 50px;
+        }
+        h1{
+          color: #ffffff;
+          text-align: center;
+      font-size: 60px;
+      margin-top: 40px;
+      text-shadow: 2px 2px #FF0000;
+        }
+    </style>
+</head>
+<body bgcolor="black">
+  <h1>Jarvis Voice access</h1>
+    <button class="talk">Start</button>
+    <h3 class="content"></h3>
+    <script>
+       
+        const btn = document.querySelector('.talk');
+        const content = document.querySelector('.content');
+
+        const websites = [
+            {
+                name: 'YouTube',
+                url: 'https://www.youtube.com/'
+            },
+            {
+                name: 'Google',
+                url: 'https://www.google.com/'
+            },
+            {
+                name: 'Facebook',
+                url: 'https://www.facebook.com/'
+            },
+            {
+                name: 'Twitter',
+                url: 'https://twitter.com/'
+            },
+            {
+                name: 'Instagram',
+                url: 'https://www.instagram.com/'
+            },
+            {
+                name: 'LinkedIn',
+                url: 'https://www.linkedin.com/'
+            },
+            {
+                name: 'GitHub',
+                url: 'https://github.com/'
+            },
+            {
+                name: 'Amazon',
+                url: 'https://www.amazon.com/'
+            },
+            {
+                name: 'Netflix',
+                url: 'https://www.netflix.com/'
+            },
+            {
+                name: 'Wikipedia',
+                url: 'https://www.wikipedia.org/'
+            },
+            {
+                name: 'Stack Overflow',
+                url: 'https://stackoverflow.com/'
+            },
+            {
+                name: 'Reddit',
+                url: 'https://www.reddit.com/'
+            },
+            {
+                name: 'Quora',
+                url: 'https://www.quora.com/'
+            },
+            {
+                name: 'IMDb',
+                url: 'https://www.imdb.com/'
+            },
+            {
+                name: 'Ebay',
+                url: 'https://www.ebay.com/'
+            },
+            {
+                name: 'Alibaba',
+                url: 'https://www.alibaba.com/'
+            },
+            {
+                name: 'CNN',
+                url: 'https://www.cnn.com/'
+            },
+            {
+                name: 'BBC',
+                url: 'https://www.bbc.com/'
+            },
+            {
+                name: 'Gmail',
+                url: 'https://mail.google.com/'
+            },
+            {
+                name: 'Yahoo',
+                url: 'https://www.yahoo.com/'
+            },
+            {
+                name: 'Spotify',
+                url: 'https://www.spotify.com/'
+            },
+            {
+                name: 'Pinterest',
+                url: 'https://www.pinterest.com/'
+            },
+            {
+                name: 'Uber',
+                url: 'https://www.uber.com/'
+            },
+            {
+                name: 'Airbnb',
+                url: 'https://www.airbnb.com/'
+            },
+            {
+                name: 'Zillow',
+                url: 'https://www.zillow.com/'
+            },
+            {
+                name: 'Snapchat',
+                url: 'https://www.snapchat.com/'
+            },
+            {
+                name: 'Zoro',
+                url: 'https://www.zoro.to/'
+            },
+            {
+                name: 'greatideasgreatlife',
+                url: 'https://www.greatideasgreatlife.com/'
+            },
+            // Add more websites here with their names and URLs
+        ];
+
+        const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+        const recognition = new SpeechRecognition();
+
+        recognition.onstart = function(){
+            console.log('How can I help you?');
+        };
+
+        recognition.onresult = function (event) {
+            const current = event.resultIndex;
+            const transcript = event.results[current][0].transcript;
+            content.textContent = transcript;
+            readOutLoud(transcript);
+        };
+
+        btn.addEventListener('click', () => {
+            recognition.start();
+        });
+
+        function readOutLoud(message){
+            const speech = new SpeechSynthesisUtterance();
+            speech.text = 'I am not able to understand, sir';
+
+            websites.forEach(website => {
+                if (message.includes(website.name)) {
+                    speech.text = `Opening ${website.name}, sir`;
+                    window.open(website.url);
+                }
+            });
+
+            speech.volume = 1;
+            speech.rate = 1.1;
+            speech.pitch = 1;
+
+            window.speechSynthesis.speak(speech);
+        }
+    </script>
+</body>
+</html>
